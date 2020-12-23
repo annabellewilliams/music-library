@@ -1,11 +1,28 @@
-import React from 'react';
+import React from "react";
+import { connect } from 'react-redux';
+import { selectSong } from "../actions";
 
-const SongList = () => {
-    return (
-        <div>
-            SongList is running!
-        </div>
-    );
+const SongList = ({ songs, selectSong }) => {
+    const renderList = () => {
+        return songs.map((song) => {
+            return (
+                <div className="item" key={song.title}>
+                    <div className="right floated content">
+                        <button className="ui button primary" onClick={() => selectSong(song)}>Select</button>
+                    </div>
+                    <div className="content">{song.title}</div>
+                </div>
+            );
+        })
+    }
+
+    return <div className="ui divided list">{renderList()}</div>;
 }
 
-export default SongList;
+const mapStateToProps = (state) => {
+    return { songs: state.songs };
+};
+
+export default connect(mapStateToProps, {
+    selectSong: selectSong
+})(SongList);
