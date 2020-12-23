@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import { SONG_SELECTED } from "../actions/types";
 
 const songsReducer = () => {
+    // TODO: Spotify API GET songs
     return [
         { title: 'Savage ft. Beyoncé', duration: '4:05' },
         { title: 'Formation', duration: '3:55' },
