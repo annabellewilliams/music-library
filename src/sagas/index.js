@@ -15,7 +15,7 @@ function* fetchSongs(action) {
                 ),
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": `Basic ${btoa('5b6a8cefabc8453fab7e42892ff20a03:f61aa61419384d70893a360e9d3b2d66')}`
+                "Authorization": `Basic ${btoa(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET)}`
             }
         };
         const auth = yield call(axios, postAuthConfig);
