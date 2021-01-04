@@ -2,7 +2,14 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import querystring from "querystring";
 
-import { SONG_FETCH_REQUESTED, SONG_FETCH_SUCCEEDED, SONG_FETCH_FAILED } from "../actions/types";
+import {
+    SONG_FETCH_REQUESTED,
+    SONG_FETCH_SUCCEEDED,
+    SONG_FETCH_FAILED,
+    AUTH_REQUESTED,
+    AUTH_SUCCEEDED,
+    AUTH_FAILED
+} from "../actions/types";
 
 function* fetchSongs(action) {
     try {
@@ -34,8 +41,25 @@ function* fetchSongs(action) {
     }
 }
 
+function* authenticate(action) {
+    // TODO: authenticate via Spotify API
+    console.log('from sagas/index.js', action);
+    const config = {
+        method: 'get',
+        url: 'http://localhost:3001/login',
+        // headers: { 'Origin': 'http://localhost:3000' }
+    };
+    const auth = yield call(axios, config);
+    try {
+        yield put({ type: AUTH_SUCCEEDED, payload: auth });
+    } catch (e) {
+        yield put({ type: AUTH_FAILED, payload: e.message })
+    }
+}
+
 function* rootSaga() {
     yield takeLatest(SONG_FETCH_REQUESTED, fetchSongs);
+    yield takeLatest(AUTH_REQUESTED, authenticate);
 }
 
 export default rootSaga;

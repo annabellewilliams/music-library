@@ -11,7 +11,7 @@ const SongList = ({ songs, selectSong, fetchSongs }) => {
     const renderArtistList = (song) => {
         return song.artists.map((artist) => {
             return (
-                <div>
+                <div key={`${artist.id}_${song.id}`}>
                     <i className="user icon" />
                     { artist.name }
                 </div>

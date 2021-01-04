@@ -1,21 +1,13 @@
 import { combineReducers } from "redux";
 
-import {SONG_SELECTED, SONG_FETCH_REQUESTED, SONG_FETCH_SUCCEEDED} from "../actions/types";
-import { fetchSongs } from "../actions";
+import { SONG_SELECTED, SONG_FETCH_SUCCEEDED, AUTH_SUCCEEDED } from "../actions/types";
 
 
 const songsReducer = (songs = null, action) => {
-    // TODO: Spotify API GET songs
     if (action.type === SONG_FETCH_SUCCEEDED) {
         return action.payload;
     }
     return songs;
-    // return [
-    //     { title: 'Savage ft. Beyoncé', duration: '4:05' },
-    //     { title: 'Formation', duration: '3:55' },
-    //     { title: 'Daddy Lessons', duration: '3:45' },
-    //     { title: 'Freedom', duration: '4:15' }
-    // ];
 };
 
 const selectedSongReducer = (selectedSong= null, action) => {
@@ -25,7 +17,16 @@ const selectedSongReducer = (selectedSong= null, action) => {
     return selectedSong;
 }
 
+const authReducer = (auth = null, action) => {
+    console.log('from reducers/index.js', action);
+    if (action.type === AUTH_SUCCEEDED) {
+        return action.payload;
+    }
+    return auth;
+}
+
 export default combineReducers({
     songs: songsReducer,
-    selectedSong: selectedSongReducer
+    selectedSong: selectedSongReducer,
+    auth: authReducer
 });
